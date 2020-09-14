@@ -14,11 +14,11 @@ router.register(
     CommentViewSet,
     basename='comment_view_set'
 )
-router.register('group', GroupViewSet)
-router.register('follow', FollowViewSet)
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v1/group/', GroupViewSet.as_view()),
+    path('v1/follow/', FollowViewSet.as_view()),
     path('v1/token/', TokenObtainPairView.as_view(),
          name='token_obtain_pair'),
     path('v1/token/refresh/', TokenRefreshView.as_view(),
