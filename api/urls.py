@@ -8,13 +8,17 @@ from rest_framework.routers import DefaultRouter
 from api.views import PostViewSet, CommentViewSet, GroupViewSet, FollowViewSet
 
 router = DefaultRouter()
-router.register('v1/posts', PostViewSet)
-router.register(r'v1/posts/(?P<post_id>[0-9]+)/comments', CommentViewSet)
-router.register('v1/group', GroupViewSet)
-router.register('v1/follow', FollowViewSet)
+router.register('posts', PostViewSet)
+router.register(
+    r'posts/(?P<post_id>[0-9]+)/comments',
+    CommentViewSet,
+    basename='comment_view_set'
+)
+router.register('group', GroupViewSet)
+router.register('follow', FollowViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('v1/', include(router.urls)),
     path('v1/token/', TokenObtainPairView.as_view(),
          name='token_obtain_pair'),
     path('v1/token/refresh/', TokenRefreshView.as_view(),
