@@ -4,6 +4,8 @@ from rest_framework.generics import (
     get_object_or_404, ListCreateAPIView)
 from rest_framework.permissions import (
     IsAuthenticated, IsAuthenticatedOrReadOnly)
+from rest_framework.viewsets import ViewSetMixin
+
 from api.serializers import (
     PostSerializer, CommentSerializer, GroupSerializer, FollowSerializer)
 from .models import Post, Group, Follow
@@ -33,13 +35,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-class GroupAPIView(ListCreateAPIView):
+class GroupAPIView(ViewSetMixin, ListCreateAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
-class FollowAPIView(ListCreateAPIView):
+class FollowAPIView(ViewSetMixin, ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
